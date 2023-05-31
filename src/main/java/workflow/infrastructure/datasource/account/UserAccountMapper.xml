@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="workflow.infrastructure.datasource.account.UserAccountMapper">
+
+    <resultMap id="user" type="workflow.domain.model.user.User">
+        <result property="name" column="ログイン名"/>
+        <result property="password" column="パスワード" />
+    </resultMap>
+
+    <resultMap id="authority"
+               type="org.springframework.security.core.authority.SimpleGrantedAuthority">
+        <constructor>
+            <arg column="役割" javaType="String"/>
+        </constructor>
+    </resultMap>
+
+    <select id="findByUsername" resultMap="user">
+        SELECT ログイン名, パスワード
+        FROM アカウント.ユーザー
+        WHERE ログイン名 = #{username}
+    </select>
+
+    <select id="rolesOf" resultMap="authority">
+        SELECT 役割
+        FROM アカウント.ユーザー役割
+        WHERE ユーザーID = (SELECT ユーザーID FROM アカウント.ユーザー WHERE ログイン名 = #{username})
+    </select>
+</mapper>
