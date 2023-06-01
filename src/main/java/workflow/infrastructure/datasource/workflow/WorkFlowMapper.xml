@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="workflow.infrastructure.datasource.workflow.WorkFlowMapper">
+
+    <insert id="registerEvent">
+        INSERT INTO ワークフロー.ワークフロー履歴 (申請ID, ワークフロー履歴ID, イベント)
+        VALUES (#{work.applicationFormId.value},
+                #{workFlowHistoryId.value},
+                #{workFlowEvent}
+                )
+    </insert>
+
+    <insert id="registerAssignedUser">
+        INSERT INTO ワークフロー.担当履歴 (申請ID, ワークフロー履歴ID, ユーザー名)
+        VALUES (#{work.applicationFormId.value},
+                #{workFlowHistoryId.value},
+                #{work.assignedUser}
+               )
+    </insert>
+
+    <delete id="removeLatest">
+        DELETE FROM ワークフロー.最新履歴
+        WHERE 申請ID = #{work.applicationFormId.value}
+    </delete>
+
+    <insert id="registerLatest">
+        INSERT INTO ワークフロー.最新履歴 (申請ID, ワークフロー履歴ID, ステータス)
+        VALUES (#{work.applicationFormId.value},
+                #{workFlowHistoryId.value},
+                #{workFlowStatus}
+                )
+    </insert>
+
+    <insert id="registerApplicant">
+        INSERT INTO ワークフロー.申請 (申請ID, 申請者)
+        VALUES (#{work.applicationFormId.value},
+                #{applicant})
+    </insert>
+
+    <select id="listOf" resultType="workflow.domain.model.workflow.WorkFlow">
+        SELECT
+            申請書.申請ID AS "applicationForm.id",
+            申請書.金額 AS "applicationForm.amount.value",
+            申請書.用途 AS "applicationForm.usage",
+            ワークフロー履歴.イベント AS "workFlowEvent",
+            担当履歴.ユーザー名 AS "assignedUser",
+            申請.申請者 AS "applicantUser",
+            申請.申請日時 AS "appliedDateTime.value",
+            最新履歴.ステータス AS "workFlowStatus"
+        FROM ワークフロー.ワークフロー履歴
+        INNER JOIN ワークフロー.最新履歴
+            ON ワークフロー履歴.申請ID = 最新履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 最新履歴.ワークフロー履歴ID
+        INNER JOIN ワークフロー.申請書
+            ON 申請書.申請ID = ワークフロー履歴.申請ID
+        INNER JOIN ワークフロー.担当履歴
+            ON ワークフロー履歴.申請ID = 担当履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 担当履歴.ワークフロー履歴ID
+        INNER JOIN ワークフロー.申請
+            ON 申請書.申請ID = 申請.申請ID
+    </select>
+</mapper>
