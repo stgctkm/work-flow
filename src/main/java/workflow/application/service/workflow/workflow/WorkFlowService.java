@@ -1,4 +1,4 @@
-package workflow.application.service.workflow;
+package workflow.application.service.workflow.workflow;
 
 import org.springframework.stereotype.Service;
 import workflow.application.service.form.ApplicationFormService;
@@ -19,11 +19,12 @@ public class WorkFlowService {
         this.applicationFormService = applicationFormService;
     }
 
-    public void create(ApplicationForm applicationForm, String applicantUserName) {
+    public ApplicationFormId create(ApplicationForm applicationForm, String applicantUserName) {
         ApplicationFormId applicationFormId = ApplicationFormId.newId();
         applicationFormService.register(applicationForm, applicationFormId);
         Work work = new Work(applicationFormId, applicantUserName);
         workFlowRepository.registerCreation(work, WorkFlowEvent.作成);
+        return applicationFormId;
     }
 
     /**

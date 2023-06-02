@@ -5,26 +5,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import workflow.application.service.user.UserService;
-import workflow.application.service.workflow.WorkFlowService;
+import workflow.application.service.workflow.history.WorkFlowHistoryService;
+import workflow.application.service.workflow.workflow.WorkFlowService;
 import workflow.domain.model.account.UserAccount;
 import workflow.domain.model.form.ApplicationFormId;
 import workflow.domain.model.user.Users;
 import workflow.domain.model.workflow.WorkFlow;
+import workflow.domain.model.workflow.history.WorkFlowHistories;
 
 @Controller
 @RequestMapping("work-flows/{applicationFormId}")
 class WorkFlowController {
 
-//    ApplicationFormService applicationFormService;
     UserService userService;
     WorkFlowService workFlowService;
+    WorkFlowHistoryService workFlowHistoryService;
 
     WorkFlowController(
-//            ApplicationFormService applicationFormService,
-            UserService userService, WorkFlowService workFlowService) {
-//        this.applicationFormService = applicationFormService;
+            UserService userService,
+            WorkFlowService workFlowService,
+            WorkFlowHistoryService workFlowHistoryService) {
         this.userService = userService;
         this.workFlowService = workFlowService;
+        this.workFlowHistoryService = workFlowHistoryService;
     }
 
     @ModelAttribute("workFlow")
@@ -42,11 +45,12 @@ class WorkFlowController {
     @GetMapping()
     String form(@PathVariable("applicationFormId") ApplicationFormId applicationFormId,
                 Model model) {
-//        ApplicationForm applicationForm = applicationFormService.applicationFormOf(applicationFormId);
-//        model.addAttribute("applicationForm", applicationForm);
 
         Users authorizers = userService.authorizers();
         model.addAttribute("authorizers", authorizers);
+
+        WorkFlowHistories histories = workFlowHistoryService.histories(applicationFormId);
+        model.addAttribute("histories", histories);
 
         return "work-flow/work-flow";
     }

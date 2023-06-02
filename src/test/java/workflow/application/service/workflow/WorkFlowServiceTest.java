@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import workflow.application.service.form.ApplicationFormService;
+import workflow.application.service.workflow.workflow.WorkFlowService;
 import workflow.domain.model.form.ApplicationForm;
 import workflow.domain.model.form.ApplicationFormId;
 

@@ -1,4 +1,4 @@
-package workflow.domain.model.workflow;
+package workflow.domain.model.workflow.history;
 
 import java.util.UUID;
 

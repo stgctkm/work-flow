@@ -1,4 +1,4 @@
-package workflow.application.service.workflow;
+package workflow.application.service.workflow.workflow;
 
 import workflow.domain.model.form.ApplicationFormId;
 import workflow.domain.model.workflow.*;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="workflow.infrastructure.datasource.workflow.history.WorkFlowHistoryMapper">
+
+    <select id="histories" resultType="workflow.domain.model.workflow.history.WorkFlowHistory">
+        SELECT
+            ワークフロー履歴.イベント AS "workFlowEvent",
+            ワークフロー履歴.作成日時 AS "datetime.value",
+            担当履歴.ユーザー名 AS "assignedUser"
+        FROM ワークフロー.ワークフロー履歴
+        INNER JOIN ワークフロー.担当履歴 ON ワークフロー履歴.申請ID = 担当履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 担当履歴.ワークフロー履歴ID
+        WHERE ワークフロー履歴.申請ID = #{applicationFormId.value}
+    </select>
+</mapper>

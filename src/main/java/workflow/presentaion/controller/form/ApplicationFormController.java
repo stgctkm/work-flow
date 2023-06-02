@@ -6,9 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import workflow.application.service.workflow.WorkFlowService;
+import workflow.application.service.workflow.workflow.WorkFlowService;
 import workflow.domain.model.account.UserAccount;
 import workflow.domain.model.form.ApplicationForm;
+import workflow.domain.model.form.ApplicationFormId;
 import workflow.domain.model.workflow.WorkFlowSearchCriteria;
 import workflow.domain.model.workflow.WorkFlows;
 
@@ -32,8 +33,8 @@ class ApplicationFormController {
     @PostMapping
     String register(@ModelAttribute("applicationForm") ApplicationForm applicationForm,
                     @AuthenticationPrincipal UserAccount userAccount) {
-        workFlowService.create(applicationForm, userAccount.getUsername());
-        return "redirect:/application-forms";
+        ApplicationFormId applicationFormId = workFlowService.create(applicationForm, userAccount.getUsername());
+        return "redirect:/work-flows/" + applicationFormId;
     }
 
     @GetMapping

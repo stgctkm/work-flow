@@ -1,9 +1,10 @@
 package workflow.infrastructure.datasource.workflow;
 
 import org.springframework.stereotype.Repository;
-import workflow.application.service.workflow.WorkFlowRepository;
+import workflow.application.service.workflow.workflow.WorkFlowRepository;
 import workflow.domain.model.form.ApplicationFormId;
 import workflow.domain.model.workflow.*;
+import workflow.domain.model.workflow.history.WorkFlowHistoryId;
 
 @Repository
 public class WorkFlowDataSource implements WorkFlowRepository {

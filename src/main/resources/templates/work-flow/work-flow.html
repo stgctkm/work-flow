@@ -87,6 +87,24 @@
   </form>
 
   </div>
+
+  <h5 class="mb-3">履歴</h5>
+  <table class="table table-striped table-hover">
+    <thead>
+    <tr>
+      <th>担当者</th>
+      <th>イベント</th>
+      <th>日時</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="history: ${histories.list}">
+      <td><span th:text="${history.assignedUser}"></span></td>
+      <td><span th:text="${history.workFlowEvent}"></span></td>
+      <td><span th:text="${history.datetime}"></span></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 </body>
 </html>
