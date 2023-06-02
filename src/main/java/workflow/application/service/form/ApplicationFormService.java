@@ -1,8 +1,8 @@
-package workflow.application.service.workflow;
+package workflow.application.service.form;
 
 import org.springframework.stereotype.Service;
-import workflow.domain.model.workflow.ApplicationForm;
-import workflow.domain.model.workflow.ApplicationFormId;
+import workflow.domain.model.form.ApplicationForm;
+import workflow.domain.model.form.ApplicationFormId;
 
 @Service
 public class ApplicationFormService {

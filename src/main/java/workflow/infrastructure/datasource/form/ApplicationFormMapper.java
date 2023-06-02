@@ -1,9 +1,9 @@
-package workflow.infrastructure.datasource.workflow;
+package workflow.infrastructure.datasource.form;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import workflow.domain.model.workflow.ApplicationForm;
-import workflow.domain.model.workflow.ApplicationFormId;
+import workflow.domain.model.form.ApplicationForm;
+import workflow.domain.model.form.ApplicationFormId;
 
 @Mapper
 interface ApplicationFormMapper {

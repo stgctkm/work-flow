@@ -1,5 +1,6 @@
 package workflow.domain.model.workflow;
 
+import workflow.domain.model.form.ApplicationForm;
 import workflow.domain.primitive.date.DateTime;
 
 public class WorkFlow {

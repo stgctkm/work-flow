@@ -1,5 +1,7 @@
 package workflow.domain.model.workflow;
 
+import workflow.domain.model.form.ApplicationFormId;
+
 public class Work {
     ApplicationFormId applicationFormId;
     // TODO UserIDにする

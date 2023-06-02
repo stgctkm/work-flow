@@ -4,8 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import workflow.domain.model.workflow.ApplicationForm;
-import workflow.domain.model.workflow.ApplicationFormId;
+import workflow.application.service.form.ApplicationFormService;
+import workflow.domain.model.form.ApplicationForm;
+import workflow.domain.model.form.ApplicationFormId;
 
 @SpringBootTest
 @Transactional

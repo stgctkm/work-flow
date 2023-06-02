@@ -1,9 +1,9 @@
-package workflow.infrastructure.datasource.workflow;
+package workflow.infrastructure.datasource.form;
 
 import org.springframework.stereotype.Repository;
-import workflow.application.service.workflow.ApplicationFormRepository;
-import workflow.domain.model.workflow.ApplicationForm;
-import workflow.domain.model.workflow.ApplicationFormId;
+import workflow.application.service.form.ApplicationFormRepository;
+import workflow.domain.model.form.ApplicationForm;
+import workflow.domain.model.form.ApplicationFormId;
 
 @Repository
 public class ApplicationFormDataSource implements ApplicationFormRepository {

@@ -1,7 +1,13 @@
 package workflow.application.service.workflow;
 
 import org.springframework.stereotype.Service;
-import workflow.domain.model.workflow.*;
+import workflow.application.service.form.ApplicationFormService;
+import workflow.domain.model.form.ApplicationForm;
+import workflow.domain.model.form.ApplicationFormId;
+import workflow.domain.model.workflow.Work;
+import workflow.domain.model.workflow.WorkFlow;
+import workflow.domain.model.workflow.WorkFlowEvent;
+import workflow.domain.model.workflow.WorkFlows;
 
 @Service
 public class WorkFlowService {

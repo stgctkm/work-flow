@@ -8,7 +8,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import workflow.application.service.workflow.WorkFlowService;
 import workflow.domain.model.account.UserAccount;
-import workflow.domain.model.workflow.ApplicationForm;
+import workflow.domain.model.form.ApplicationForm;
 import workflow.domain.model.workflow.WorkFlows;
 
 @Controller

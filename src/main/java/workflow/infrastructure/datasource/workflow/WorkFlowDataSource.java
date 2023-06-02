@@ -2,6 +2,7 @@ package workflow.infrastructure.datasource.workflow;
 
 import org.springframework.stereotype.Repository;
 import workflow.application.service.workflow.WorkFlowRepository;
+import workflow.domain.model.form.ApplicationFormId;
 import workflow.domain.model.workflow.*;
 
 @Repository
