@@ -58,6 +58,21 @@
             ON ワークフロー履歴.申請ID = 担当履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 担当履歴.ワークフロー履歴ID
         INNER JOIN ワークフロー.申請
             ON 申請書.申請ID = 申請.申請ID
+        <where>
+            <if test="!criteria.from.isEmpty()">
+                <![CDATA[
+                  AND #{criteria.from.value} <= 申請日時
+                ]]>
+            </if>
+            <if test="!criteria.to.isEmpty()">
+                <![CDATA[
+                  AND 申請日時 <= #{criteria.to.value}
+                ]]>
+            </if>
+            <if test="criteria.isAssignedOnly()">
+                申請.申請者 = #{username}
+            </if>
+        </where>
     </select>
 
     <select id="workFlowOf" resultType="workflow.domain.model.workflow.WorkFlow">

@@ -28,7 +28,8 @@ interface WorkFlowMapper {
             @Param("workFlowStatus") WorkFlowStatus workFlowStatus);
 
     List<WorkFlow> listOf(
-            @Param("username") String username);
+            @Param("username") String username,
+            @Param("criteria") WorkFlowSearchCriteria workFlowSearchCriteria);
 
     void registerApplicant(
             @Param("work") Work work,

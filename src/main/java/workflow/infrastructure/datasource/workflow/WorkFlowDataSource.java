@@ -34,8 +34,8 @@ public class WorkFlowDataSource implements WorkFlowRepository {
     }
 
     @Override
-    public WorkFlows listOf(String username) {
-        return new WorkFlows(workFlowMapper.listOf(username));
+    public WorkFlows listOf(String username, WorkFlowSearchCriteria workFlowSearchCriteria) {
+        return new WorkFlows(workFlowMapper.listOf(username, workFlowSearchCriteria));
     }
 
     @Override

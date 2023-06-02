@@ -4,10 +4,7 @@ import org.springframework.stereotype.Service;
 import workflow.application.service.form.ApplicationFormService;
 import workflow.domain.model.form.ApplicationForm;
 import workflow.domain.model.form.ApplicationFormId;
-import workflow.domain.model.workflow.Work;
-import workflow.domain.model.workflow.WorkFlow;
-import workflow.domain.model.workflow.WorkFlowEvent;
-import workflow.domain.model.workflow.WorkFlows;
+import workflow.domain.model.workflow.*;
 
 @Service
 public class WorkFlowService {
@@ -63,8 +60,8 @@ public class WorkFlowService {
     /**
      * ワークフローの一覧を取得する
      */
-    public WorkFlows listOf(String username) {
-        return workFlowRepository.listOf(username);
+    public WorkFlows listOf(String username, WorkFlowSearchCriteria workFlowSearchCriteria) {
+        return workFlowRepository.listOf(username, workFlowSearchCriteria);
     }
 
 

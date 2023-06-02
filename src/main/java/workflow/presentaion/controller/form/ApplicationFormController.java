@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import workflow.application.service.workflow.WorkFlowService;
 import workflow.domain.model.account.UserAccount;
 import workflow.domain.model.form.ApplicationForm;
+import workflow.domain.model.workflow.WorkFlowSearchCriteria;
 import workflow.domain.model.workflow.WorkFlows;
 
 @Controller
@@ -36,19 +37,29 @@ class ApplicationFormController {
     }
 
     @GetMapping
-    String list(Authentication authentication,
-                Model model) {
+    String list(
+            @ModelAttribute("workFlowSearchCriteria") WorkFlowSearchCriteria workFlowSearchCriteria,
+            Authentication authentication,
+            Model model) {
         UserAccount userAccount = (UserAccount) authentication.getPrincipal();
-        WorkFlows workFlows = workFlowService.listOf(userAccount.getUsername());
+        WorkFlows workFlows = workFlowService.listOf(userAccount.getUsername(), workFlowSearchCriteria);
         model.addAttribute("workFlows", workFlows);
         return "application-form/list";
     }
 
     @InitBinder("applicationForm")
-    void bindSalesOrderCriteria(WebDataBinder binder) {
+    void bindApplicationForm(WebDataBinder binder) {
         binder.setAllowedFields(
                 "amount",
                 "usage"
+        );
+    }
+    @InitBinder("workFlowSearchCriteria")
+    void bindWorkFlowSearchCriteria(WebDataBinder binder) {
+        binder.setAllowedFields(
+                "from",
+                "to",
+                "assignedOnly"
         );
     }
 }
