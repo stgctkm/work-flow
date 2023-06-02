@@ -17,8 +17,7 @@ class ApplicationFormController {
 
     WorkFlowService workFlowService;
 
-    ApplicationFormController(
-            WorkFlowService workFlowService) {
+    ApplicationFormController(WorkFlowService workFlowService) {
         this.workFlowService = workFlowService;
     }
 
@@ -26,6 +25,8 @@ class ApplicationFormController {
     String start(@ModelAttribute("applicationForm") ApplicationForm applicationForm) {
         return "application-form/new-application-form";
     }
+
+
 
     @PostMapping
     String register(@ModelAttribute("applicationForm") ApplicationForm applicationForm,

@@ -10,6 +10,10 @@ public class Work {
         this.assignedUser= assignedUserName;
     }
 
+    public ApplicationFormId applicationFormId() {
+        return applicationFormId;
+    }
+
     public String applicantUser() {
         return assignedUser;
     }

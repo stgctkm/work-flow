@@ -1,9 +1,6 @@
 package workflow.application.service.workflow;
 
-import workflow.domain.model.workflow.ApplicationFormId;
-import workflow.domain.model.workflow.Work;
-import workflow.domain.model.workflow.WorkFlowEvent;
-import workflow.domain.model.workflow.WorkFlows;
+import workflow.domain.model.workflow.*;
 
 public interface WorkFlowRepository {
     void register(Work work, WorkFlowEvent workFlowEvent);
@@ -12,4 +9,5 @@ public interface WorkFlowRepository {
 
     WorkFlows listOf(String username);
 
+    WorkFlow workFlowOf(ApplicationFormId applicationFormId);
 }

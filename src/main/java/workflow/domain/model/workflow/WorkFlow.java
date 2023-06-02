@@ -33,4 +33,16 @@ public class WorkFlow {
     public DateTime appliedDateTime() {
         return appliedDateTime;
     }
+
+    public boolean isAssignedUser(String assignedUser) {
+        return this.assignedUser.equals(assignedUser);
+    }
+
+    public boolean isOnCreating() {
+        return workFlowStatus.isOnCreating();
+    }
+
+    public boolean isOnApplied() {
+        return workFlowStatus.isOnApplied();
+    }
 }

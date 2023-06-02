@@ -21,7 +21,7 @@ class WorkFlowServiceTest {
     void 申請() {
 
         ApplicationFormId 申請ID = ApplicationFormId.newId();
-        applicationFormService.register(new ApplicationForm(申請ID));
+        applicationFormService.register(new ApplicationForm(), 申請ID);
 
         sut.apply(申請ID, "user1");
     }

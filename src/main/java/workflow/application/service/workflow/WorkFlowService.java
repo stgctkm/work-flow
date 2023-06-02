@@ -17,8 +17,9 @@ public class WorkFlowService {
     }
 
     public void create(ApplicationForm applicationForm, String applicantUserName) {
-        applicationFormService.register(applicationForm);
-        Work work = new Work(applicationForm.id(), applicantUserName);
+        ApplicationFormId applicationFormId = ApplicationFormId.newId();
+        applicationFormService.register(applicationForm, applicationFormId);
+        Work work = new Work(applicationFormId, applicantUserName);
         workFlowRepository.registerCreation(work, WorkFlowEvent.作成);
     }
 
@@ -40,9 +41,9 @@ public class WorkFlowService {
     /**
      * 差戻し
      */
-    public void reject(ApplicationFormId applicationFormId, String assignedUserName) {
-        Work work = new Work(applicationFormId, assignedUserName);
-        workFlowRepository.register(work, WorkFlowEvent.差戻し);
+    public void reject(ApplicationFormId applicationFormId) {
+        WorkFlow workFlow = workFlowOf(applicationFormId);
+        workFlowRepository.register(new Work(applicationFormId, workFlow.applicantUser()), WorkFlowEvent.差戻し);
     }
 
     /**
@@ -58,5 +59,10 @@ public class WorkFlowService {
      */
     public WorkFlows listOf(String username) {
         return workFlowRepository.listOf(username);
+    }
+
+
+    public WorkFlow workFlowOf(ApplicationFormId applicationFormId) {
+        return workFlowRepository.workFlowOf(applicationFormId);
     }
 }

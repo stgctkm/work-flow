@@ -5,6 +5,9 @@ import java.util.UUID;
 public class ApplicationFormId {
     UUID value;
 
+    ApplicationFormId() {
+    }
+
     public ApplicationFormId(String value) {
         this(UUID.fromString(value));
     }

@@ -17,15 +17,19 @@ public class WorkFlowDataSource implements WorkFlowRepository {
     public void register(Work work, WorkFlowEvent workFlowEvent) {
 
         WorkFlowHistoryId workFlowHistoryId = WorkFlowHistoryId.newHistoryId();
-        workFlowMapper.registerEvent(work, workFlowHistoryId, workFlowEvent);
+        workFlowMapper.registerEvent(work.applicationFormId(), workFlowHistoryId, workFlowEvent);
         workFlowMapper.registerAssignedUser(work, workFlowHistoryId);
-        workFlowMapper.removeLatest(work);
-        workFlowMapper.registerLatest(work, workFlowHistoryId, workFlowEvent.nextStatus());
+        workFlowMapper.removeLatest(work.applicationFormId());
+        workFlowMapper.registerLatest(work.applicationFormId(), workFlowHistoryId, workFlowEvent.nextStatus());
     }
 
     @Override
     public void register(ApplicationFormId applicationFormId, WorkFlowEvent workFlowEvent) {
-        throw new RuntimeException();
+        WorkFlowHistoryId workFlowHistoryId = WorkFlowHistoryId.newHistoryId();
+        workFlowMapper.registerEvent(applicationFormId, workFlowHistoryId, workFlowEvent);
+
+        workFlowMapper.removeLatest(applicationFormId);
+        workFlowMapper.registerLatest(applicationFormId, workFlowHistoryId, workFlowEvent.nextStatus());
     }
 
     @Override
@@ -34,13 +38,18 @@ public class WorkFlowDataSource implements WorkFlowRepository {
     }
 
     @Override
+    public WorkFlow workFlowOf(ApplicationFormId applicationFormId) {
+        return workFlowMapper.workFlowOf(applicationFormId);
+    }
+
+    @Override
     public void registerCreation(Work work, WorkFlowEvent workFlowEvent) {
         WorkFlowHistoryId workFlowHistoryId = WorkFlowHistoryId.newHistoryId();
-        workFlowMapper.registerEvent(work, workFlowHistoryId, workFlowEvent);
+        workFlowMapper.registerEvent(work.applicationFormId(), workFlowHistoryId, workFlowEvent);
         workFlowMapper.registerAssignedUser(work, workFlowHistoryId);
         workFlowMapper.registerApplicant(work, work.applicantUser());
-        workFlowMapper.removeLatest(work);
-        workFlowMapper.registerLatest(work, workFlowHistoryId, workFlowEvent.nextStatus());
+        workFlowMapper.removeLatest(work.applicationFormId());
+        workFlowMapper.registerLatest(work.applicationFormId(), workFlowHistoryId, workFlowEvent.nextStatus());
     }
 
 }

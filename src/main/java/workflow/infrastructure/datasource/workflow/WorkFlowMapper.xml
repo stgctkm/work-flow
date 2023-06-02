@@ -6,7 +6,7 @@
 
     <insert id="registerEvent">
         INSERT INTO ワークフロー.ワークフロー履歴 (申請ID, ワークフロー履歴ID, イベント)
-        VALUES (#{work.applicationFormId.value},
+        VALUES (#{applicationFormId.value},
                 #{workFlowHistoryId.value},
                 #{workFlowEvent}
                 )
@@ -22,12 +22,12 @@
 
     <delete id="removeLatest">
         DELETE FROM ワークフロー.最新履歴
-        WHERE 申請ID = #{work.applicationFormId.value}
+        WHERE 申請ID = #{applicationFormId.value}
     </delete>
 
     <insert id="registerLatest">
         INSERT INTO ワークフロー.最新履歴 (申請ID, ワークフロー履歴ID, ステータス)
-        VALUES (#{work.applicationFormId.value},
+        VALUES (#{applicationFormId.value},
                 #{workFlowHistoryId.value},
                 #{workFlowStatus}
                 )
@@ -41,7 +41,7 @@
 
     <select id="listOf" resultType="workflow.domain.model.workflow.WorkFlow">
         SELECT
-            申請書.申請ID AS "applicationForm.id",
+            申請書.申請ID AS "applicationForm.id.value",
             申請書.金額 AS "applicationForm.amount.value",
             申請書.用途 AS "applicationForm.usage",
             ワークフロー履歴.イベント AS "workFlowEvent",
@@ -58,5 +58,27 @@
             ON ワークフロー履歴.申請ID = 担当履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 担当履歴.ワークフロー履歴ID
         INNER JOIN ワークフロー.申請
             ON 申請書.申請ID = 申請.申請ID
+    </select>
+
+    <select id="workFlowOf" resultType="workflow.domain.model.workflow.WorkFlow">
+        SELECT
+            申請書.申請ID AS "applicationForm.id.value",
+            申請書.金額 AS "applicationForm.amount.value",
+            申請書.用途 AS "applicationForm.usage",
+            ワークフロー履歴.イベント AS "workFlowEvent",
+            担当履歴.ユーザー名 AS "assignedUser",
+            申請.申請者 AS "applicantUser",
+            申請.申請日時 AS "appliedDateTime.value",
+            最新履歴.ステータス AS "workFlowStatus"
+        FROM ワークフロー.ワークフロー履歴
+                 INNER JOIN ワークフロー.最新履歴
+                            ON ワークフロー履歴.申請ID = 最新履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 最新履歴.ワークフロー履歴ID
+                 INNER JOIN ワークフロー.申請書
+                            ON 申請書.申請ID = ワークフロー履歴.申請ID
+                 INNER JOIN ワークフロー.担当履歴
+                            ON ワークフロー履歴.申請ID = 担当履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 担当履歴.ワークフロー履歴ID
+                 INNER JOIN ワークフロー.申請
+                            ON 申請書.申請ID = 申請.申請ID
+        WHERE 申請書.申請ID = #{applicationFormId.value}
     </select>
 </mapper>

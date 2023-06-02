@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="workflow.infrastructure.datasource.user.UserMapper">
+
+
+    <select id="authorizers" resultType="workflow.domain.model.user.User">
+        SELECT
+            ユーザー.ユーザーID,
+            ログイン名 AS "name"
+        FROM アカウント.ユーザー
+        INNER JOIN アカウント.ユーザー役割 ON ユーザー.ユーザーID = ユーザー役割.ユーザーID
+        WHERE 役割 = 'ROLE_ADMIN'
+
+    </select>
+</mapper>

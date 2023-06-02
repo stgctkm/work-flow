@@ -13,7 +13,7 @@ public class ApplicationForm {
     String usage;
 
     public ApplicationForm() {
-        this(ApplicationFormId.newId(), new Amount(), "");
+        this(new ApplicationFormId(), new Amount(), "");
     }
 
     public ApplicationForm(ApplicationFormId id, Amount amount, String usage) {

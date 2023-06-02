@@ -10,7 +10,7 @@ import java.util.List;
 interface WorkFlowMapper {
 
     void registerEvent(
-            @Param("work") Work work,
+            @Param("applicationFormId") ApplicationFormId applicationFormId,
             @Param("workFlowHistoryId") WorkFlowHistoryId workFlowHistoryId,
             @Param("workFlowEvent") WorkFlowEvent workFlowEvent);
 
@@ -18,10 +18,11 @@ interface WorkFlowMapper {
             @Param("work") Work work,
             @Param("workFlowHistoryId") WorkFlowHistoryId workFlowHistoryId);
 
-    void removeLatest(@Param("work") Work work);
+    void removeLatest(
+            @Param("applicationFormId") ApplicationFormId applicationFormId);
 
     void registerLatest(
-            @Param("work") Work work,
+            @Param("applicationFormId") ApplicationFormId applicationFormId,
             @Param("workFlowHistoryId") WorkFlowHistoryId workFlowHistoryId,
             @Param("workFlowStatus") WorkFlowStatus workFlowStatus);
 
@@ -31,4 +32,8 @@ interface WorkFlowMapper {
     void registerApplicant(
             @Param("work") Work work,
             @Param("applicant") String applicant);
+
+    WorkFlow workFlowOf(
+            @Param("applicationFormId") ApplicationFormId applicationFormId);
+
 }

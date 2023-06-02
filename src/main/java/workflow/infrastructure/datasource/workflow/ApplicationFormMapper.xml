@@ -6,8 +6,18 @@
 
     <insert id="register">
         INSERT INTO ワークフロー.申請書 (申請ID, 金額, 用途)
-        VALUES (#{applicationForm.id.value},
+        VALUES (#{applicationFormId.value},
                 #{applicationForm.amount.value},
                 #{applicationForm.usage})
     </insert>
+
+    <select id="applicationFormOf" resultType="workflow.domain.model.workflow.ApplicationForm">
+        SELECT
+            申請書.申請ID AS "id.value",
+            申請書.金額 AS "amount.value",
+            申請書.用途 AS "usage"
+        FROM ワークフロー.申請書
+        WHERE 申請ID = #{applicationFormId.value}
+    </select>
+
 </mapper>
