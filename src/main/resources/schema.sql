@@ -55,10 +55,11 @@ CREATE TABLE ワークフロー.ワークフロー履歴
 CREATE TABLE ワークフロー.申請
 (
     申請ID UUID NOT NULL,
-    申請者 VARCHAR(256) NOT NULL,
+    申請者ID BIGINT NOT NULL,
     申請日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (申請ID),
     FOREIGN KEY (申請ID) REFERENCES ワークフロー.申請書 (申請ID),
+    FOREIGN KEY (申請者ID) REFERENCES アカウント.ユーザー(ユーザーID),
     作成日時 TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -76,9 +77,9 @@ CREATE TABLE ワークフロー.担当履歴
 (
     申請ID UUID NOT NULL,
     ワークフロー履歴ID UUID NOT NULL,
-    ユーザー名 VARCHAR(256) NOT NULL,
+    ユーザーID BIGINT NOT NULL,
     PRIMARY KEY (申請ID, ワークフロー履歴ID),
     FOREIGN KEY (申請ID, ワークフロー履歴ID) REFERENCES ワークフロー.ワークフロー履歴(申請ID, ワークフロー履歴ID),
-    FOREIGN KEY (ユーザー名) REFERENCES アカウント.ユーザー(ログイン名),
+    FOREIGN KEY (ユーザーID) REFERENCES アカウント.ユーザー(ユーザーID),
     作成日時 TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

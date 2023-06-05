@@ -12,16 +12,23 @@
 </head>
 <body>
 <header th:replace="~{_parts/header :: main('メニュー')}"></header>
-<!--<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>-->
 
 
 <div class="container">
+  <h2 class="mt-3">交通費申請書</h2>
   <div>
-    <a href="/application-forms">申請書一覧</a>
+    <div>
+      <a href="#" th:href="@{/application-forms/new}" class="fs-4">
+        <i class="bi bi-file-text"></i>
+        申請書作成
+      </a>
+    </div>
+    <a href="#" th:href="@{/application-forms}" class="fs-4">
+      <i class="bi bi-table"></i>
+      申請書一覧
+    </a>
   </div>
-  <div>
-    <a href="/application-forms/new">申請書作成</a>
-  </div>
+
 </div>
 </body>
 </html>

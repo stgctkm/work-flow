@@ -8,6 +8,7 @@ import workflow.application.service.form.ApplicationFormService;
 import workflow.application.service.workflow.workflow.WorkFlowService;
 import workflow.domain.model.form.ApplicationForm;
 import workflow.domain.model.form.ApplicationFormId;
+import workflow.domain.model.user.UserId;
 
 @SpringBootTest
 @Transactional
@@ -25,6 +26,6 @@ class WorkFlowServiceTest {
         ApplicationFormId 申請ID = ApplicationFormId.newId();
         applicationFormService.register(new ApplicationForm(), 申請ID);
 
-        sut.apply(申請ID, "user1");
+        sut.apply(申請ID, new UserId(1));
     }
 }

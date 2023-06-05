@@ -1,23 +1,24 @@
 package workflow.domain.model.workflow;
 
 import workflow.domain.model.form.ApplicationFormId;
+import workflow.domain.model.user.UserId;
 
 public class Work {
     ApplicationFormId applicationFormId;
-    // TODO UserIDにする
-    String assignedUser;
+    UserId assignedUserId;
 
-    public Work(ApplicationFormId applicationFormId, String assignedUserName) {
+    public Work(ApplicationFormId applicationFormId, UserId assignedUserId) {
         this.applicationFormId = applicationFormId;
-        this.assignedUser= assignedUserName;
+        this.assignedUserId = assignedUserId;
     }
 
     public ApplicationFormId applicationFormId() {
         return applicationFormId;
     }
 
-    public String applicantUser() {
-        return assignedUser;
+    public UserId applicatnUserId() {
+        return assignedUserId;
     }
+
 }
 

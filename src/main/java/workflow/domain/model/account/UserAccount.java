@@ -3,6 +3,7 @@ package workflow.domain.model.account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import workflow.domain.model.user.User;
+import workflow.domain.model.user.UserId;
 
 import java.util.Collection;
 
@@ -24,6 +25,10 @@ public class UserAccount implements UserDetails  {
     @Override
     public String getPassword() {
         return user.password();
+    }
+
+    public UserId userId() {
+        return user.userId();
     }
 
     @Override

@@ -3,6 +3,7 @@ package workflow.infrastructure.datasource.workflow;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import workflow.domain.model.form.ApplicationFormId;
+import workflow.domain.model.user.UserId;
 import workflow.domain.model.workflow.*;
 import workflow.domain.model.workflow.history.WorkFlowHistoryId;
 
@@ -29,12 +30,12 @@ interface WorkFlowMapper {
             @Param("workFlowStatus") WorkFlowStatus workFlowStatus);
 
     List<WorkFlow> listOf(
-            @Param("username") String username,
+            @Param("userId") UserId userId,
             @Param("criteria") WorkFlowSearchCriteria workFlowSearchCriteria);
 
     void registerApplicant(
             @Param("work") Work work,
-            @Param("applicant") String applicant);
+            @Param("applicantUserId") UserId applicantUserId);
 
     WorkFlow workFlowOf(
             @Param("applicationFormId") ApplicationFormId applicationFormId);

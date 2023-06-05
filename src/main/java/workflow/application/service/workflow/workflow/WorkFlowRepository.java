@@ -1,6 +1,7 @@
 package workflow.application.service.workflow.workflow;
 
 import workflow.domain.model.form.ApplicationFormId;
+import workflow.domain.model.user.UserId;
 import workflow.domain.model.workflow.*;
 
 public interface WorkFlowRepository {
@@ -8,7 +9,7 @@ public interface WorkFlowRepository {
     void register(ApplicationFormId applicationFormId, WorkFlowEvent workFlowEvent);
     void registerCreation(Work work, WorkFlowEvent workFlowEvent);
 
-    WorkFlows listOf(String username, WorkFlowSearchCriteria workFlowSearchCriteria);
+    WorkFlows listOf(UserId userId, WorkFlowSearchCriteria workFlowSearchCriteria);
 
     WorkFlow workFlowOf(ApplicationFormId applicationFormId);
 }

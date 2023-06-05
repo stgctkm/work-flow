@@ -1,14 +1,16 @@
 package workflow.domain.model.workflow;
 
 import workflow.domain.model.form.ApplicationForm;
+import workflow.domain.model.user.User;
+import workflow.domain.model.user.UserId;
 import workflow.domain.primitive.date.DateTime;
 
 public class WorkFlow {
     ApplicationForm applicationForm;
     WorkFlowEvent workFlowEvent;
     WorkFlowStatus workFlowStatus;
-    String assignedUser;
-    String applicantUser;
+    User assignedUser;
+    User applicantUser;
     DateTime appliedDateTime;
 
     public ApplicationForm applicationForm() {
@@ -23,11 +25,11 @@ public class WorkFlow {
         return workFlowStatus;
     }
 
-    public String assignedUser() {
+    public User assignedUser() {
         return assignedUser;
     }
 
-    public String applicantUser() {
+    public User applicantUser() {
         return applicantUser;
     }
 
@@ -35,8 +37,8 @@ public class WorkFlow {
         return appliedDateTime;
     }
 
-    public boolean isAssignedUser(String assignedUser) {
-        return this.assignedUser.equals(assignedUser);
+    public boolean isAssignedUser(UserId assignedUserId) {
+        return this.assignedUser.userId().isSame(assignedUserId);
     }
 
     public boolean isOnCreating() {

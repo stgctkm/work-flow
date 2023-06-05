@@ -67,10 +67,10 @@
           <span th:text="${workFlow.appliedDateTime}">2023-04-01</span>
         </td>
         <td class="text-center">
-          <span th:text="${workFlow.applicantUser}">申請者名</span>
+          <span th:text="${workFlow.applicantUser.name}">申請者名</span>
         </td>
         <td class="text-center">
-          <span th:text="${workFlow.assignedUser}">担当者</span>
+          <span th:text="${workFlow.assignedUser.name}">担当者</span>
         </td>
         <td class="text-center">
           <span th:text="${workFlow.workFlowStatus()}">申請中</span>

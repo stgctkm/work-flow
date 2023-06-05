@@ -3,6 +3,7 @@ package workflow.infrastructure.datasource.workflow;
 import org.springframework.stereotype.Repository;
 import workflow.application.service.workflow.workflow.WorkFlowRepository;
 import workflow.domain.model.form.ApplicationFormId;
+import workflow.domain.model.user.UserId;
 import workflow.domain.model.workflow.*;
 import workflow.domain.model.workflow.history.WorkFlowHistoryId;
 
@@ -35,8 +36,8 @@ public class WorkFlowDataSource implements WorkFlowRepository {
     }
 
     @Override
-    public WorkFlows listOf(String username, WorkFlowSearchCriteria workFlowSearchCriteria) {
-        return new WorkFlows(workFlowMapper.listOf(username, workFlowSearchCriteria));
+    public WorkFlows listOf(UserId userId, WorkFlowSearchCriteria workFlowSearchCriteria) {
+        return new WorkFlows(workFlowMapper.listOf(userId, workFlowSearchCriteria));
     }
 
     @Override
@@ -49,7 +50,7 @@ public class WorkFlowDataSource implements WorkFlowRepository {
         WorkFlowHistoryId workFlowHistoryId = WorkFlowHistoryId.newHistoryId();
         workFlowMapper.registerEvent(work.applicationFormId(), workFlowHistoryId, workFlowEvent);
         workFlowMapper.registerAssignedUser(work, workFlowHistoryId);
-        workFlowMapper.registerApplicant(work, work.applicantUser());
+        workFlowMapper.registerApplicant(work, work.applicatnUserId());
         workFlowMapper.removeLatest(work.applicationFormId());
         workFlowMapper.registerLatest(work.applicationFormId(), workFlowHistoryId, workFlowEvent.nextStatus());
     }

@@ -8,9 +8,11 @@
         SELECT
             ワークフロー履歴.イベント AS "workFlowEvent",
             ワークフロー履歴.作成日時 AS "datetime.value",
-            担当履歴.ユーザー名 AS "assignedUser"
+            担当履歴.ユーザーID AS "assignedUser.userId.value",
+            ユーザー.ログイン名 AS "assignedUser.name"
         FROM ワークフロー.ワークフロー履歴
         INNER JOIN ワークフロー.担当履歴 ON ワークフロー履歴.申請ID = 担当履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 担当履歴.ワークフロー履歴ID
+        INNER JOIN アカウント.ユーザー ON 担当履歴.ユーザーID = ユーザー.ユーザーID
         WHERE ワークフロー履歴.申請ID = #{applicationFormId.value}
     </select>
 </mapper>

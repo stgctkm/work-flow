@@ -5,6 +5,7 @@
 <mapper namespace="workflow.infrastructure.datasource.account.UserAccountMapper">
 
     <resultMap id="user" type="workflow.domain.model.user.User">
+        <id property="userId.value" column="ユーザーID"/>
         <result property="name" column="ログイン名"/>
         <result property="password" column="パスワード" />
     </resultMap>
@@ -17,7 +18,10 @@
     </resultMap>
 
     <select id="findByUsername" resultMap="user">
-        SELECT ログイン名, パスワード
+        SELECT
+            ユーザーID,
+            ログイン名,
+            パスワード
         FROM アカウント.ユーザー
         WHERE ログイン名 = #{username}
     </select>

@@ -33,7 +33,7 @@ class ApplicationFormController {
     @PostMapping
     String register(@ModelAttribute("applicationForm") ApplicationForm applicationForm,
                     @AuthenticationPrincipal UserAccount userAccount) {
-        ApplicationFormId applicationFormId = workFlowService.create(applicationForm, userAccount.getUsername());
+        ApplicationFormId applicationFormId = workFlowService.create(applicationForm, userAccount.userId());
         return "redirect:/work-flows/" + applicationFormId;
     }
 
@@ -43,7 +43,7 @@ class ApplicationFormController {
             Authentication authentication,
             Model model) {
         UserAccount userAccount = (UserAccount) authentication.getPrincipal();
-        WorkFlows workFlows = workFlowService.listOf(userAccount.getUsername(), workFlowSearchCriteria);
+        WorkFlows workFlows = workFlowService.listOf(userAccount.userId(), workFlowSearchCriteria);
         model.addAttribute("workFlows", workFlows);
         return "application-form/list";
     }

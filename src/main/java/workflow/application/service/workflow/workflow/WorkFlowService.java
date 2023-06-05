@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import workflow.application.service.form.ApplicationFormService;
 import workflow.domain.model.form.ApplicationForm;
 import workflow.domain.model.form.ApplicationFormId;
+import workflow.domain.model.user.UserId;
 import workflow.domain.model.workflow.*;
 
 @Service
@@ -19,10 +20,10 @@ public class WorkFlowService {
         this.applicationFormService = applicationFormService;
     }
 
-    public ApplicationFormId create(ApplicationForm applicationForm, String applicantUserName) {
+    public ApplicationFormId create(ApplicationForm applicationForm, UserId userId) {
         ApplicationFormId applicationFormId = ApplicationFormId.newId();
         applicationFormService.register(applicationForm, applicationFormId);
-        Work work = new Work(applicationFormId, applicantUserName);
+        Work work = new Work(applicationFormId, userId);
         workFlowRepository.registerCreation(work, WorkFlowEvent.作成);
         return applicationFormId;
     }
@@ -30,8 +31,8 @@ public class WorkFlowService {
     /**
      * 申請
      */
-    public void apply(ApplicationFormId applicationFormId, String assignedUserName)  {
-        Work work = new Work(applicationFormId, assignedUserName);
+    public void apply(ApplicationFormId applicationFormId, UserId userId)  {
+        Work work = new Work(applicationFormId, userId);
         workFlowRepository.register(work, WorkFlowEvent.申請);
     }
 
@@ -47,7 +48,7 @@ public class WorkFlowService {
      */
     public void reject(ApplicationFormId applicationFormId) {
         WorkFlow workFlow = workFlowOf(applicationFormId);
-        workFlowRepository.register(new Work(applicationFormId, workFlow.applicantUser()), WorkFlowEvent.差戻し);
+        workFlowRepository.register(new Work(applicationFormId, workFlow.applicantUser().userId()), WorkFlowEvent.差戻し);
     }
 
     /**
@@ -61,8 +62,8 @@ public class WorkFlowService {
     /**
      * ワークフローの一覧を取得する
      */
-    public WorkFlows listOf(String username, WorkFlowSearchCriteria workFlowSearchCriteria) {
-        return workFlowRepository.listOf(username, workFlowSearchCriteria);
+    public WorkFlows listOf(UserId userId, WorkFlowSearchCriteria workFlowSearchCriteria) {
+        return workFlowRepository.listOf(userId, workFlowSearchCriteria);
     }
 
 

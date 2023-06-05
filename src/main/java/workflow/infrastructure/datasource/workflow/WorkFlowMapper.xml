@@ -13,10 +13,10 @@
     </insert>
 
     <insert id="registerAssignedUser">
-        INSERT INTO ワークフロー.担当履歴 (申請ID, ワークフロー履歴ID, ユーザー名)
+        INSERT INTO ワークフロー.担当履歴 (申請ID, ワークフロー履歴ID, ユーザーID)
         VALUES (#{work.applicationFormId.value},
                 #{workFlowHistoryId.value},
-                #{work.assignedUser}
+                #{work.assignedUserId.value}
                )
     </insert>
 
@@ -34,9 +34,9 @@
     </insert>
 
     <insert id="registerApplicant">
-        INSERT INTO ワークフロー.申請 (申請ID, 申請者)
+        INSERT INTO ワークフロー.申請 (申請ID, 申請者ID)
         VALUES (#{work.applicationFormId.value},
-                #{applicant})
+                #{applicantUserId.value})
     </insert>
 
     <select id="listOf" resultType="workflow.domain.model.workflow.WorkFlow">
@@ -45,8 +45,10 @@
             申請書.金額 AS "applicationForm.amount.value",
             申請書.用途 AS "applicationForm.usage",
             ワークフロー履歴.イベント AS "workFlowEvent",
-            担当履歴.ユーザー名 AS "assignedUser",
-            申請.申請者 AS "applicantUser",
+            担当ユーザー.ユーザーID AS "assignedUser.userId.value",
+            担当ユーザー.ログイン名 AS "assignedUser.name",
+            申請ユーザー.ユーザーID AS "applicantUser.userId.value",
+            申請ユーザー.ログイン名 AS "applicantUser.name",
             申請.申請日時 AS "appliedDateTime.value",
             最新履歴.ステータス AS "workFlowStatus"
         FROM ワークフロー.ワークフロー履歴
@@ -58,6 +60,8 @@
             ON ワークフロー履歴.申請ID = 担当履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 担当履歴.ワークフロー履歴ID
         INNER JOIN ワークフロー.申請
             ON 申請書.申請ID = 申請.申請ID
+        INNER JOIN アカウント.ユーザー 担当ユーザー ON 担当履歴.ユーザーID = 担当ユーザー.ユーザーID
+        INNER JOIN アカウント.ユーザー 申請ユーザー ON 申請.申請者ID = 申請ユーザー.ユーザーID
         <where>
             <if test="!criteria.from.isEmpty()">
                 <![CDATA[
@@ -70,7 +74,7 @@
                 ]]>
             </if>
             <if test="criteria.isAssignedOnly()">
-                申請.申請者 = #{username}
+                担当ユーザー.ユーザーID = #{userId.value}
             </if>
         </where>
     </select>
@@ -81,8 +85,10 @@
             申請書.金額 AS "applicationForm.amount.value",
             申請書.用途 AS "applicationForm.usage",
             ワークフロー履歴.イベント AS "workFlowEvent",
-            担当履歴.ユーザー名 AS "assignedUser",
-            申請.申請者 AS "applicantUser",
+            担当ユーザー.ユーザーID AS "assignedUser.userId.value",
+            担当ユーザー.ログイン名 AS "assignedUser.name",
+            申請ユーザー.ユーザーID AS "applicantUser.userId.value",
+            申請ユーザー.ログイン名 AS "applicantUser.name",
             申請.申請日時 AS "appliedDateTime.value",
             最新履歴.ステータス AS "workFlowStatus"
         FROM ワークフロー.ワークフロー履歴
@@ -94,6 +100,8 @@
                             ON ワークフロー履歴.申請ID = 担当履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 担当履歴.ワークフロー履歴ID
                  INNER JOIN ワークフロー.申請
                             ON 申請書.申請ID = 申請.申請ID
+                 INNER JOIN アカウント.ユーザー 担当ユーザー ON 担当履歴.ユーザーID = 担当ユーザー.ユーザーID
+                 INNER JOIN アカウント.ユーザー 申請ユーザー ON 申請.申請者ID = 申請ユーザー.ユーザーID
         WHERE 申請書.申請ID = #{applicationFormId.value}
     </select>
 </mapper>

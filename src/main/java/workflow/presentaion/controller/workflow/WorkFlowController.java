@@ -3,12 +3,14 @@ package workflow.presentaion.controller.workflow;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import workflow.application.service.user.UserService;
 import workflow.application.service.workflow.history.WorkFlowHistoryService;
 import workflow.application.service.workflow.workflow.WorkFlowService;
 import workflow.domain.model.account.UserAccount;
 import workflow.domain.model.form.ApplicationFormId;
+import workflow.domain.model.user.UserId;
 import workflow.domain.model.user.Users;
 import workflow.domain.model.workflow.WorkFlow;
 import workflow.domain.model.workflow.history.WorkFlowHistories;
@@ -39,7 +41,7 @@ class WorkFlowController {
     boolean isAssigned(
             @ModelAttribute("workFlow") WorkFlow workFlow,
             @AuthenticationPrincipal UserAccount userAccount) {
-        return workFlow.isAssignedUser(userAccount.getUsername());
+        return workFlow.isAssignedUser(userAccount.userId());
     }
 
     @GetMapping()
@@ -57,8 +59,8 @@ class WorkFlowController {
 
     @PostMapping("apply")
     String apply(@PathVariable ApplicationFormId applicationFormId,
-                 @ModelAttribute("assignedUser") String assignedUser) {
-        workFlowService.apply(applicationFormId, assignedUser);
+                 @ModelAttribute("assignedUserId") UserId assignedUserId) {
+        workFlowService.apply(applicationFormId, assignedUserId);
         return "redirect:/application-forms";
     }
 
@@ -78,5 +80,12 @@ class WorkFlowController {
     String cancel(@PathVariable ApplicationFormId applicationFormId) {
         workFlowService.cancel(applicationFormId);
         return "redirect:/application-forms";
+    }
+
+    @InitBinder("assignedUserId")
+    void bindAssignedUserId(WebDataBinder binder) {
+        binder.setAllowedFields(
+                "value"
+        );
     }
 }

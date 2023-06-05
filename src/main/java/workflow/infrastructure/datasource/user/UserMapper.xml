@@ -7,7 +7,7 @@
 
     <select id="authorizers" resultType="workflow.domain.model.user.User">
         SELECT
-            ユーザー.ユーザーID,
+            ユーザー.ユーザーID AS "userId.value",
             ログイン名 AS "name"
         FROM アカウント.ユーザー
         INNER JOIN アカウント.ユーザー役割 ON ユーザー.ユーザーID = ユーザー役割.ユーザーID
