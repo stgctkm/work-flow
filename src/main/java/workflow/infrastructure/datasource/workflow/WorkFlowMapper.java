@@ -33,6 +33,8 @@ interface WorkFlowMapper {
             @Param("userId") UserId userId,
             @Param("criteria") WorkFlowSearchCriteria workFlowSearchCriteria);
 
+    List<WorkFlow> list();
+
     void registerApplicant(
             @Param("work") Work work,
             @Param("applicantUserId") UserId applicantUserId);

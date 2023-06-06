@@ -11,12 +11,16 @@ import workflow.domain.model.workflow.*;
 public class WorkFlowService {
 
     WorkFlowRepository workFlowRepository;
+    WorkFlowTransfer workFlowTransfer;
     ApplicationFormService applicationFormService;
+
 
     WorkFlowService(
             WorkFlowRepository workFlowRepository,
+            WorkFlowTransfer workFlowTransfer,
             ApplicationFormService applicationFormService) {
         this.workFlowRepository = workFlowRepository;
+        this.workFlowTransfer = workFlowTransfer;
         this.applicationFormService = applicationFormService;
     }
 
@@ -34,6 +38,7 @@ public class WorkFlowService {
     public void apply(ApplicationFormId applicationFormId, UserId userId)  {
         Work work = new Work(applicationFormId, userId);
         workFlowRepository.register(work, WorkFlowEvent.申請);
+        workFlowTransfer.notifyApplied(work);
     }
 
     /**
@@ -41,6 +46,8 @@ public class WorkFlowService {
      */
     public void approve(ApplicationFormId applicationFormId) {
         workFlowRepository.register(applicationFormId, WorkFlowEvent.承認);
+        WorkFlow workFlow = workFlowOf(applicationFormId);
+        workFlowTransfer.notifyApproved(applicationFormId, workFlow.applicantUser());
     }
 
     /**
@@ -48,7 +55,9 @@ public class WorkFlowService {
      */
     public void reject(ApplicationFormId applicationFormId) {
         WorkFlow workFlow = workFlowOf(applicationFormId);
-        workFlowRepository.register(new Work(applicationFormId, workFlow.applicantUser().userId()), WorkFlowEvent.差戻し);
+        Work work = new Work(applicationFormId, workFlow.applicantUser().userId());
+        workFlowRepository.register(work, WorkFlowEvent.差戻し);
+        workFlowTransfer.notifyRejected(work, workFlow.applicantUser());
     }
 
     /**
@@ -57,6 +66,8 @@ public class WorkFlowService {
     public void cancel(ApplicationFormId applicationFormId) {
         // 却下のステータスを記録する
         workFlowRepository.register(applicationFormId, WorkFlowEvent.却下);
+        WorkFlow workFlow = workFlowOf(applicationFormId);
+        workFlowTransfer.notifyCanceled(applicationFormId, workFlow.applicantUser());
     }
 
     /**
@@ -66,7 +77,13 @@ public class WorkFlowService {
         return workFlowRepository.listOf(userId, workFlowSearchCriteria);
     }
 
+    public WorkFlows list() {
+        return workFlowRepository.list();
+    }
 
+    /**
+     * ワークフローを取得する
+     */
     public WorkFlow workFlowOf(ApplicationFormId applicationFormId) {
         return workFlowRepository.workFlowOf(applicationFormId);
     }

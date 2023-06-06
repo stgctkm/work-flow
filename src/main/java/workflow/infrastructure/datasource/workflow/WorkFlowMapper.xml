@@ -21,12 +21,12 @@
     </insert>
 
     <delete id="removeLatest">
-        DELETE FROM ワークフロー.最新履歴
+        DELETE FROM ワークフロー._最新履歴
         WHERE 申請ID = #{applicationFormId.value}
     </delete>
 
     <insert id="registerLatest">
-        INSERT INTO ワークフロー.最新履歴 (申請ID, ワークフロー履歴ID, ステータス)
+        INSERT INTO ワークフロー._最新履歴 (申請ID, ワークフロー履歴ID, ステータス)
         VALUES (#{applicationFormId.value},
                 #{workFlowHistoryId.value},
                 #{workFlowStatus}
@@ -40,28 +40,7 @@
     </insert>
 
     <select id="listOf" resultType="workflow.domain.model.workflow.WorkFlow">
-        SELECT
-            申請書.申請ID AS "applicationForm.id.value",
-            申請書.金額 AS "applicationForm.amount.value",
-            申請書.用途 AS "applicationForm.usage",
-            ワークフロー履歴.イベント AS "workFlowEvent",
-            担当ユーザー.ユーザーID AS "assignedUser.userId.value",
-            担当ユーザー.ログイン名 AS "assignedUser.name",
-            申請ユーザー.ユーザーID AS "applicantUser.userId.value",
-            申請ユーザー.ログイン名 AS "applicantUser.name",
-            申請.申請日時 AS "appliedDateTime.value",
-            最新履歴.ステータス AS "workFlowStatus"
-        FROM ワークフロー.ワークフロー履歴
-        INNER JOIN ワークフロー.最新履歴
-            ON ワークフロー履歴.申請ID = 最新履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 最新履歴.ワークフロー履歴ID
-        INNER JOIN ワークフロー.申請書
-            ON 申請書.申請ID = ワークフロー履歴.申請ID
-        INNER JOIN ワークフロー.担当履歴
-            ON ワークフロー履歴.申請ID = 担当履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 担当履歴.ワークフロー履歴ID
-        INNER JOIN ワークフロー.申請
-            ON 申請書.申請ID = 申請.申請ID
-        INNER JOIN アカウント.ユーザー 担当ユーザー ON 担当履歴.ユーザーID = 担当ユーザー.ユーザーID
-        INNER JOIN アカウント.ユーザー 申請ユーザー ON 申請.申請者ID = 申請ユーザー.ユーザーID
+        <include refid="work-flow-sql"/>
         <where>
             <if test="!criteria.from.isEmpty()">
                 <![CDATA[
@@ -81,6 +60,16 @@
 
     <select id="workFlowOf" resultType="workflow.domain.model.workflow.WorkFlow">
         SELECT
+            <include refid="work-flow-sql"/>
+        WHERE 申請書.申請ID = #{applicationFormId.value}
+    </select>
+
+    <select id="list" resultType="workflow.domain.model.workflow.WorkFlow">
+        <include refid="work-flow-sql"/>
+    </select>
+
+    <sql id="work-flow-sql">
+        SELECT
             申請書.申請ID AS "applicationForm.id.value",
             申請書.金額 AS "applicationForm.amount.value",
             申請書.用途 AS "applicationForm.usage",
@@ -90,10 +79,11 @@
             申請ユーザー.ユーザーID AS "applicantUser.userId.value",
             申請ユーザー.ログイン名 AS "applicantUser.name",
             申請.申請日時 AS "appliedDateTime.value",
-            最新履歴.ステータス AS "workFlowStatus"
+            ワークフロー履歴.作成日時 AS "assignedDateTime.value",
+            _最新履歴.ステータス AS "workFlowStatus"
         FROM ワークフロー.ワークフロー履歴
-                 INNER JOIN ワークフロー.最新履歴
-                            ON ワークフロー履歴.申請ID = 最新履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = 最新履歴.ワークフロー履歴ID
+                 INNER JOIN ワークフロー._最新履歴
+                            ON ワークフロー履歴.申請ID = _最新履歴.申請ID AND ワークフロー履歴.ワークフロー履歴ID = _最新履歴.ワークフロー履歴ID
                  INNER JOIN ワークフロー.申請書
                             ON 申請書.申請ID = ワークフロー履歴.申請ID
                  INNER JOIN ワークフロー.担当履歴
@@ -102,6 +92,5 @@
                             ON 申請書.申請ID = 申請.申請ID
                  INNER JOIN アカウント.ユーザー 担当ユーザー ON 担当履歴.ユーザーID = 担当ユーザー.ユーザーID
                  INNER JOIN アカウント.ユーザー 申請ユーザー ON 申請.申請者ID = 申請ユーザー.ユーザーID
-        WHERE 申請書.申請ID = #{applicationFormId.value}
-    </select>
+    </sql>
 </mapper>

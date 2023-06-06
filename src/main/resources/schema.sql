@@ -63,7 +63,7 @@ CREATE TABLE ワークフロー.申請
     作成日時 TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE ワークフロー.最新履歴
+CREATE TABLE ワークフロー._最新履歴
 (
     申請ID UUID NOT NULL,
     ワークフロー履歴ID UUID NOT NULL,

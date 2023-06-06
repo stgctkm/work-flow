@@ -12,4 +12,6 @@ public interface WorkFlowRepository {
     WorkFlows listOf(UserId userId, WorkFlowSearchCriteria workFlowSearchCriteria);
 
     WorkFlow workFlowOf(ApplicationFormId applicationFormId);
+
+    WorkFlows list();
 }

@@ -12,6 +12,7 @@ public class WorkFlow {
     User assignedUser;
     User applicantUser;
     DateTime appliedDateTime;
+    DateTime assignedDateTime;
 
     public ApplicationForm applicationForm() {
         return applicationForm;
@@ -35,6 +36,10 @@ public class WorkFlow {
 
     public DateTime appliedDateTime() {
         return appliedDateTime;
+    }
+
+    public DateTime assignedDateTime() {
+        return assignedDateTime;
     }
 
     public boolean isAssignedUser(UserId assignedUserId) {
