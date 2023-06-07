@@ -16,7 +16,7 @@ public class Work {
         return applicationFormId;
     }
 
-    public UserId applicantUserId() {
+    public UserId assignedUserId() {
         return assignedUserId;
     }
 

@@ -59,8 +59,7 @@
     </select>
 
     <select id="workFlowOf" resultType="workflow.domain.model.workflow.WorkFlow">
-        SELECT
-            <include refid="work-flow-sql"/>
+        <include refid="work-flow-sql"/>
         WHERE 申請書.申請ID = #{applicationFormId.value}
     </select>
 

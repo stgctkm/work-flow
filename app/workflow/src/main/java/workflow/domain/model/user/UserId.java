@@ -1,6 +1,8 @@
 package workflow.domain.model.user;
 
-public class UserId {
+import java.io.Serializable;
+
+public class UserId implements Serializable {
     long value;
 
     public UserId() {

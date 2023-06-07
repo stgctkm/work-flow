@@ -1,1 +1,3 @@
 rootProject.name = 'workflow'
+
+include 'app:workflow', 'app:notification'

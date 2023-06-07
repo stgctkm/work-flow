@@ -2,6 +2,7 @@ package workflow.infrastructure.transfer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Repository;
 import workflow.application.service.workflow.workflow.WorkFlowTransfer;
 import workflow.domain.model.form.ApplicationFormId;
@@ -12,10 +13,23 @@ import workflow.domain.model.workflow.Work;
 public class WorkFlowPublisher implements WorkFlowTransfer {
 
     Logger logger = LoggerFactory.getLogger(WorkFlowPublisher.class);
+    RabbitTemplate rabbitTemplate;
+
+    WorkFlowPublisher(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
+
+//    public void instruct(InstructionNumber instructionNumber) {
+//        logger.info("publish instructionNumber={}", instructionNumber);
+//        rabbitTemplate.convertAndSend("md-inbound-instruction.md", instructionNumber.toString());
+//    }
+
+
 
     @Override
     public void notifyApplied(Work work) {
-        logger.info("申請（申請ID: {}) が ユーザー(ユーザーID {}) アサインされました", work.applicationFormId(), work.applicantUserId());
+//        logger.info("申請（申請ID: {}) が ユーザー(ユーザーID {}) 申請されました", work.applicationFormId(), work.applicantUserId());
+        rabbitTemplate.convertAndSend("notify-workflow-event", WorkFlowMessage.appliedMessage(work.applicationFormId(), work.assignedUserId()));
     }
 
     @Override

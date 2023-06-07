@@ -42,6 +42,7 @@ public class WorkFlowDataSource implements WorkFlowRepository {
 
     @Override
     public WorkFlow workFlowOf(ApplicationFormId applicationFormId) {
+        WorkFlow workFlow = workFlowMapper.workFlowOf(applicationFormId);
         return workFlowMapper.workFlowOf(applicationFormId);
     }
 
@@ -55,7 +56,7 @@ public class WorkFlowDataSource implements WorkFlowRepository {
         WorkFlowHistoryId workFlowHistoryId = WorkFlowHistoryId.newHistoryId();
         workFlowMapper.registerEvent(work.applicationFormId(), workFlowHistoryId, workFlowEvent);
         workFlowMapper.registerAssignedUser(work, workFlowHistoryId);
-        workFlowMapper.registerApplicant(work, work.applicantUserId());
+        workFlowMapper.registerApplicant(work, work.assignedUserId());
         workFlowMapper.removeLatest(work.applicationFormId());
         workFlowMapper.registerLatest(work.applicationFormId(), workFlowHistoryId, workFlowEvent.nextStatus());
     }

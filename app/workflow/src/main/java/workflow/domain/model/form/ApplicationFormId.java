@@ -1,8 +1,9 @@
 package workflow.domain.model.form;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class ApplicationFormId {
+public class ApplicationFormId implements Serializable {
     UUID value;
 
     ApplicationFormId() {

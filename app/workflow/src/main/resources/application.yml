@@ -25,7 +25,7 @@ spring:
         - classpath:data.sql
   thymeleaf:
     cache: false
-    prefix: file:src/main/resources/templates/
+    prefix: file:app/workflow/src/main/resources/templates/
 
 management:
   endpoints:
