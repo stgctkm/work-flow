@@ -5,12 +5,15 @@ spring:
     property-naming-strategy: SNAKE_CASE
 
   cloud:
+    function:
+      definition: receiveWorkFlowEvent;receiveExpired
     stream:
-      function:
-        definition: receiveWorkFlowEvent
       bindings:
         receiveWorkFlowEvent-in-0:
           destination: work-flow-topic
+          group: event
+        receiveExpired-in-0:
+          destination: expired-topic
           group: event
   main:
     web-application-type: none

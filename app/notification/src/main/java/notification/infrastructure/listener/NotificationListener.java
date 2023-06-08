@@ -1,6 +1,7 @@
 package notification.infrastructure.listener;
 
 import notification.application.service.NotificationService;
+import notification.domain.model.workflow.ExpiredWorkFlowEvent;
 import notification.infrastructure.message.WorkFlowMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,15 @@ public class NotificationListener {
             logger.info("message receive: {}", message);
             WorkFlowMessage payload = message.getPayload();
             notificationService.apply(payload);
+        };
+    }
+
+    @Bean
+    public Consumer<Message<ExpiredWorkFlowEvent>> receiveExpired(NotificationService notificationService) {
+        return message -> {
+            logger.info("message receive: {}", message);
+            ExpiredWorkFlowEvent payload = message.getPayload();
+            notificationService.notifyExpired(payload);
         };
     }
 }
