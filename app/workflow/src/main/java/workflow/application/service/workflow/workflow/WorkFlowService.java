@@ -7,6 +7,9 @@ import workflow.domain.model.form.ApplicationFormId;
 import workflow.domain.model.user.UserId;
 import workflow.domain.model.workflow.*;
 
+/**
+ * ワークフローサービス
+ */
 @Service
 public class WorkFlowService {
 
@@ -24,6 +27,9 @@ public class WorkFlowService {
         this.applicationFormService = applicationFormService;
     }
 
+    /**
+     * 作成
+     */
     public ApplicationFormId create(ApplicationForm applicationForm, UserId userId) {
         ApplicationFormId applicationFormId = ApplicationFormId.newId();
         applicationFormService.register(applicationForm, applicationFormId);
@@ -77,6 +83,9 @@ public class WorkFlowService {
         return workFlowRepository.listOf(userId, workFlowSearchCriteria);
     }
 
+    /**
+     * ワークフロー一覧を取得する
+     */
     public WorkFlows list() {
         return workFlowRepository.list();
     }

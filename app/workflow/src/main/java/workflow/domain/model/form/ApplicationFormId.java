@@ -2,6 +2,9 @@ package workflow.domain.model.form;
 
 import java.util.UUID;
 
+/**
+ * 申請書ID
+ */
 public class ApplicationFormId {
     UUID value;
 

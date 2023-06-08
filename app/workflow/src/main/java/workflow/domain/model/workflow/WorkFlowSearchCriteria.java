@@ -2,6 +2,9 @@ package workflow.domain.model.workflow;
 
 import workflow.domain.primitive.date.Date;
 
+/**
+ * ワークフロー検索条件
+ */
 public class WorkFlowSearchCriteria {
     Date from;
     Date to;

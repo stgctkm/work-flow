@@ -3,6 +3,9 @@ package workflow.domain.model.workflow;
 import workflow.domain.model.form.ApplicationFormId;
 import workflow.domain.model.user.UserId;
 
+/**
+ * ワーク
+ */
 public class Work {
     ApplicationFormId applicationFormId;
     UserId assignedUserId;

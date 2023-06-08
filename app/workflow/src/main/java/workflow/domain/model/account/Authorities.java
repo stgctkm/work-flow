@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 権限
+ */
 public class Authorities implements Serializable {
     List<GrantedAuthority> authorities;
 

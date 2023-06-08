@@ -2,6 +2,9 @@ package workflow.domain.model.user;
 
 import java.io.Serializable;
 
+/**
+ * ユーザー
+ */
 public class User implements Serializable {
     UserId userId;
     String name;

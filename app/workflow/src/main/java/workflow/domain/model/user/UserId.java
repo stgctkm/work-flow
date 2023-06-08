@@ -1,5 +1,8 @@
 package workflow.domain.model.user;
 
+/**
+ * ユーザーID
+ */
 public class UserId {
     long value;
 

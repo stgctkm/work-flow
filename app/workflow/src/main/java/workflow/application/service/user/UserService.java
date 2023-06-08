@@ -3,6 +3,9 @@ package workflow.application.service.user;
 import org.springframework.stereotype.Service;
 import workflow.domain.model.user.Users;
 
+/**
+ * ユーザーサービス
+ */
 @Service
 public class UserService {
 

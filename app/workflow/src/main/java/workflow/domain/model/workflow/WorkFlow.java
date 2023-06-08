@@ -5,6 +5,9 @@ import workflow.domain.model.user.User;
 import workflow.domain.model.user.UserId;
 import workflow.domain.primitive.date.DateTime;
 
+/**
+ * ワークフロー
+ */
 public class WorkFlow {
     ApplicationForm applicationForm;
     WorkFlowEvent workFlowEvent;
@@ -42,14 +45,23 @@ public class WorkFlow {
         return assignedDateTime;
     }
 
-    public boolean isAssignedUser(UserId assignedUserId) {
-        return this.assignedUser.userId().isSame(assignedUserId);
+    /**
+     * 指定されたユーザーがアサインされたユーザーかどうか
+     */
+    public boolean isAssignedUser(UserId userId) {
+        return this.assignedUser.userId().isSame(userId);
     }
 
+    /**
+     * 作成中かどうか
+     */
     public boolean isOnCreating() {
         return workFlowStatus.isOnCreating();
     }
 
+    /**
+     * 申請中かどうか
+     */
     public boolean isOnApplied() {
         return workFlowStatus.isOnApplied();
     }

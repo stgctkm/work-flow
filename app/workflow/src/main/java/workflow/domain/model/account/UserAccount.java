@@ -7,6 +7,9 @@ import workflow.domain.model.user.UserId;
 
 import java.util.Collection;
 
+/**
+ * ユーザーアカウント
+ */
 public class UserAccount implements UserDetails  {
 
     User user;
