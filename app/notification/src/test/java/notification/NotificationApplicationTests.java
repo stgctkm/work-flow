@@ -1,10 +1,10 @@
-package workflow;
+package notification;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WorkflowApplicationTests {
+class NotificationApplicationTests {
 
     @Test
     void contextLoads() {

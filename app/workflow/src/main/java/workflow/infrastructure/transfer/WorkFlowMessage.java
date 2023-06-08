@@ -4,9 +4,7 @@ import workflow.domain.model.form.ApplicationFormId;
 import workflow.domain.model.user.UserId;
 import workflow.domain.model.workflow.WorkFlowEvent;
 
-import java.io.Serializable;
-
-public class WorkFlowMessage implements Serializable {
+public class WorkFlowMessage {
 
     WorkFlowEvent workFlowEvent;
     ApplicationFormId applicationFormId;

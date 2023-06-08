@@ -1,31 +1,21 @@
-mybatis:
-  config-location: classpath:mybatis.xml
-
 spring:
   jackson:
     visibility:
       field: non_private
     property-naming-strategy: SNAKE_CASE
-  datasource:
-    url: jdbc:h2:mem:testdb;MODE=PostgreSQL
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
-  h2:
-    console:
-      enabled: true
-  sql:
-    init:
-      mode: ALWAYS
-      encoding: utf-8
-      schema-locations:
-        - classpath:schema.sql
-      data-locations:
-        - classpath:data.sql
-  thymeleaf:
-    cache: false
-    prefix: file:src/main/resources/templates/
+
+  cloud:
+    stream:
+      function:
+        definition: receiveWorkFlowEvent
+      bindings:
+        receiveWorkFlowEvent-in-0:
+          destination: work-flow-topic
+          group: event
+  main:
+    web-application-type: none
+  rabbitmq:
+    connection-timeout: 30
 
 management:
   endpoints:
@@ -36,7 +26,9 @@ management:
     health:
       show-details: always
 
+
+
 logging:
   level:
-    workflow:
+    notification:
       infrastructure.datasource: DEBUG

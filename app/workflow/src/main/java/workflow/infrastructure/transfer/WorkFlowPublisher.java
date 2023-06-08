@@ -29,7 +29,7 @@ public class WorkFlowPublisher implements WorkFlowTransfer {
     @Override
     public void notifyApplied(Work work) {
 //        logger.info("申請（申請ID: {}) が ユーザー(ユーザーID {}) 申請されました", work.applicationFormId(), work.applicantUserId());
-        rabbitTemplate.convertAndSend("notify-workflow-event", WorkFlowMessage.appliedMessage(work.applicationFormId(), work.assignedUserId()));
+        rabbitTemplate.convertAndSend("work-flow-topic", "",  WorkFlowMessage.appliedMessage(work.applicationFormId(), work.assignedUserId()));
     }
 
     @Override
