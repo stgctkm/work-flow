@@ -30,12 +30,16 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1'
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
-//    implementation platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.2')
 
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'com.github.irof:jig-erd:latest.release'
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+    runtimeOnly 'io.opentelemetry:opentelemetry-exporter-zipkin'
 }
 
 tasks.named('test') {

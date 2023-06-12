@@ -2,6 +2,8 @@ mybatis:
   config-location: classpath:mybatis.xml
 
 spring:
+  application:
+    name: work-flow
   jackson:
     visibility:
       field: non_private
@@ -35,8 +37,14 @@ management:
   endpoint:
     health:
       show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
 
 logging:
   level:
+    root: info
     workflow:
       infrastructure.datasource: DEBUG
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'

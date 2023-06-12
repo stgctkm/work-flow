@@ -25,7 +25,7 @@ public class WarnOverdueWorkFlowsTask {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 60000)
     @Scheduled(cron = "0 15 * * * *")
     public void warnLeft() {
         logger.info("The time is now {}", LocalDateTime.now());
