@@ -1,6 +1,6 @@
 spring:
   application:
-    name: notification-app
+    name: notification-cloud-stream
   jackson:
     visibility:
       field: non_private
@@ -17,6 +17,15 @@ spring:
         receiveExpired-in-0:
           destination: expired-topic
           group: event
+      rabbit:
+        bindings:
+          receiveWorkFlowEvent-in-0:
+            consumer:
+              bindingRoutingKey: routingKey.work-flow.event.cloud-stream
+          receiveExpired-in-0:
+            consumer:
+              bindingRoutingKey: routingKey.work-flow.expired.cloud-stream
+
   main:
     web-application-type: none
   rabbitmq:

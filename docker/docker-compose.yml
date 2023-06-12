@@ -6,5 +6,7 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-#    profiles:
-#      - integration
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"

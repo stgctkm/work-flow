@@ -37,7 +37,7 @@ public class WarnOverdueWorkFlowsTask {
 //                    workFlow.applicationForm().id(),
 //                    workFlow.assignedDateTime());
 
-            rabbitTemplate.convertAndSend("expired-topic", "",
+            rabbitTemplate.convertAndSend("expired-topic", "routingKey.work-flow.expired",
                     new ExpiredWorkFlow(workFlow.assignedUser(), workFlow.applicationForm().id(), workFlow.assignedDateTime()));
         });
     }

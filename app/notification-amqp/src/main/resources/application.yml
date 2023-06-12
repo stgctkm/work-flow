@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: notification-amqp
+  jackson:
+    visibility:
+      field: non_private
+    property-naming-strategy: SNAKE_CASE
+
+  main:
+    web-application-type: none
+  rabbitmq:
+    connection-timeout: 30
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+
+  level:
+    root: info
+    notification:
+      infrastructure.datasource: DEBUG
+
+work-flow:
+  event:
+    topic:
+      exchange:
+        name: work-flow-topic
+    notification:
+      queue:
+        name: event-with-rabbit
+  expired:
+    topic:
+      exchange:
+        name: expired-topic
+    notification:
+      queue:
+        name: expired-with-rabbit

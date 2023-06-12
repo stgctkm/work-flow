@@ -22,21 +22,21 @@ public class WorkFlowPublisher implements WorkFlowTransfer {
 
     @Override
     public void notifyApplied(Work work) {
-        rabbitTemplate.convertAndSend("work-flow-topic", "",  WorkFlowMessage.appliedMessage(work.applicationFormId(), work.assignedUserId()));
+        rabbitTemplate.convertAndSend("work-flow-topic", "routingKey.work-flow.event",  WorkFlowMessage.appliedMessage(work.applicationFormId(), work.assignedUserId()));
     }
 
     @Override
     public void notifyApproved(ApplicationFormId applicationFormId, User applicantUser) {
-        rabbitTemplate.convertAndSend("work-flow-topic", "",  WorkFlowMessage.approvedMessage(applicationFormId, applicantUser.userId()));
+        rabbitTemplate.convertAndSend("work-flow-topic", "routingKey.work-flow.event",  WorkFlowMessage.approvedMessage(applicationFormId, applicantUser.userId()));
     }
 
     @Override
     public void notifyRejected(Work work, User applicantUser) {
-        rabbitTemplate.convertAndSend("work-flow-topic", "",  WorkFlowMessage.rejectedMessage(work.applicationFormId(), applicantUser.userId()));
+        rabbitTemplate.convertAndSend("work-flow-topic", "routingKey.work-flow.event",  WorkFlowMessage.rejectedMessage(work.applicationFormId(), applicantUser.userId()));
     }
 
     @Override
     public void notifyCanceled(ApplicationFormId applicationFormId, User applicantUser) {
-        rabbitTemplate.convertAndSend("work-flow-topic", "",  WorkFlowMessage.canceledMessage(applicationFormId, applicantUser.userId()));
+        rabbitTemplate.convertAndSend("work-flow-topic", "routingKey.work-flow.event",  WorkFlowMessage.canceledMessage(applicationFormId, applicantUser.userId()));
     }
 }

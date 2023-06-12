@@ -20,3 +20,26 @@
 |---------|------|------|
 | kintone | TD   | TD   |
 | 自作      | TD   | TD   |
+
+
+
+## 非同期
+### rabbitmq
+- routing key
+  - https://www.rabbitmq.com/tutorials/tutorial-five-python.html
+  - 
+- cloud stream 
+  - routing key の設定
+  - https://cloud.spring.io/spring-cloud-static/spring-cloud-stream-binder-rabbit/3.0.1.RELEASE/reference/html/spring-cloud-stream-binder-rabbit.html#_rabbitmq_consumer_properties
+
+
+```mermaid
+flowchart LR
+work-flow --> topic{topic}
+subgraph RabbitMQ
+    topic --> queue-amqp([queue-amqp])
+    topic --> queue-cloud-stream([queue-cloud-stream])
+end
+queue-amqp --> notification-amqp
+queue-cloud-stream --> notification-cloud-stream
+```
